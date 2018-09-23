@@ -4,10 +4,10 @@ from matplotlib import animation
 
 EARTH_CENTER = (15.0, 0)
 G = 10.0
-SUN_MASS = 100.0
+SUN_MASS = 170.0
 SUN_CENTER = (0, 0)
 dt = 1.0 / 30
-INITIAL_VEL = 7.0
+INITIAL_VEL = 7
 
 fig = plt.figure()
 ax = fig.add_subplot(111, aspect='equal', autoscale_on=False,
@@ -16,7 +16,7 @@ ax.grid()
 
 sun = plt.Circle(SUN_CENTER, 3, fc='y')
 earth = plt.Circle(EARTH_CENTER, 1, fc='b')
-
+track, = ax.plot([], [], 'g' , lw=2)
 
 # Given dt, update pos will update the position.
 class Planet:
@@ -67,7 +67,9 @@ earth_planet = Planet()
 def init():
     ax.add_patch(sun)
     ax.add_patch(earth)
-    return sun,earth,
+    return sun,earth,track
+
+xdata, ydata = [], []
 
 def animate(i):
     global earth_planet
@@ -76,9 +78,13 @@ def animate(i):
     x, y = earth_planet.update_pos()
     earth.center = (x, y)
 
+    xdata.append(x)
+    ydata.append(y)
+    track.set_data(xdata, ydata)
+
     # ax.plot(x, y, 'go-', markersize = 1)
 
-    return sun,earth,
+    return sun,earth,track, 
 
 anim = animation.FuncAnimation(fig, animate, 
                                init_func=init, 
