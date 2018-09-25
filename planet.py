@@ -4,10 +4,10 @@ from matplotlib import animation
 
 EARTH_CENTER = (15.0, 0)
 G = 10.0
-SUN_MASS = 170.0
+SUN_MASS = 140.0
 SUN_CENTER = (0, 0)
 dt = 1.0 / 30
-INITIAL_VEL = 7
+INITIAL_VEL = 10
 
 fig = plt.figure()
 ax = fig.add_subplot(111, aspect='equal', autoscale_on=False,
