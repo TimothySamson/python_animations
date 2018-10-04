@@ -1,29 +1,64 @@
 import numpy as np
-from matplotlib import pyplot as plt
-from matplotlib import animation
+import matplotlib.pyplot as plt
+import mpl_toolkits.mplot3d.axes3d as p3
+import matplotlib.animation as animation
 
+# Fixing random state for reproducibility
+np.random.seed(19680801)
+
+
+def Gen_RandLine(length, dims=2):
+    """
+    Create a line using a random walk algorithm
+
+    length is the number of points for the line.
+    dims is the number of dimensions the line has.
+    """
+    lineData = np.empty((dims, length))
+    lineData[:, 0] = np.random.rand(dims)
+    for index in range(1, length):
+        # scaling the random numbers by 0.1 so
+        # movement is small compared to position.
+        # subtraction by 0.5 is to change the range to [-0.5, 0.5]
+        # to allow a line to move backwards.
+        step = ((np.random.rand(dims) - 0.5) * 0.1)
+        lineData[:, index] = lineData[:, index - 1] + step
+
+    return lineData
+
+
+def update_lines(num, dataLines, lines):
+    for line, data in zip(lines, dataLines):
+        # NOTE: there is no .set_data() for 3 dim data...
+        line.set_data(data[0:2, :num])
+        line.set_3d_properties(data[2, :num])
+    return lines
+
+# Attaching 3D axis to the figure
 fig = plt.figure()
-ax = fig.add_subplot(111, aspect='equal', autoscale_on=False,
-                     xlim=(-25, 25), ylim=(-25, 25))
+ax = p3.Axes3D(fig)
 
-plot, = ax.plot(0,0  , 'bo')
+# Fifty lines of random 3-D lines
+data = [Gen_RandLine(25, 3) for index in range(50)]
 
-def init():
-    return plot,
+# Creating fifty line objects.
+# NOTE: Can't pass empty arrays into 3d version of plot()
+lines = [ax.plot(dat[0, 0:1], dat[1, 0:1], dat[2, 0:1])[0] for dat in data]
 
-def animate(i):
-    x = 12.5*np.cos(np.radians(i))
-    y = 12.5*np.sin(np.radians(i))
-    plot.set_data(x, y)
+# Setting the axes properties
+ax.set_xlim3d([0.0, 1.0])
+ax.set_xlabel('X')
 
-    return plot,
+ax.set_ylim3d([0.0, 1.0])
+ax.set_ylabel('Y')
 
+ax.set_zlim3d([0.0, 1.0])
+ax.set_zlabel('Z')
 
+ax.set_title('3D Test')
 
-anim = animation.FuncAnimation(fig, animate, 
-                               init_func=init, 
-                               frames=360, 
-                               interval=20,
-                               blit=True)
+# Creating the Animation object
+line_ani = animation.FuncAnimation(fig, update_lines, 25, fargs=(data, lines),
+                                   interval=50, blit=False)
 
 plt.show()

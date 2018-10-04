@@ -9,8 +9,8 @@ ax = fig.add_subplot(111, aspect='equal', autoscale_on=False,
 
 angular_vel = 1
 dtheta = angular_vel / 30.0
-RAD_1 = 11
-RAD_2 = 4
+RAD_1 = 6
+RAD_2 = 3
 CENTER = (0, 0)
 circ2 = 2 * np.pi * RAD_2
 
@@ -55,7 +55,7 @@ x0, y0 = CENTER
 circle1 = plt.Circle(CENTER, RAD_1, fc='y')
 circle2 = plt.Circle((x0 + RAD_1 + RAD_2, y0), RAD_2, fc='b')
 mark, = ax.plot([], [], 'go-')
-track, = ax.plot([], [], 'g')
+track, = ax.plot([], [], 'g', lw=1)
 trackx, tracky = [], []
 
 def init():

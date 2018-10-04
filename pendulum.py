@@ -10,7 +10,7 @@ ax.grid()
 dt = 1.0 / 30
 g = 7.0
 L = 2.5
-ang_disp = np.pi/6
+ang_disp = np.pi/16
 
 class Pendulum:
     def __init__(self, center):
@@ -44,7 +44,7 @@ class Pendulum:
         return (x, y)
 
 
-pend = Pendulum((0, 3))
+pend = Pendulum((0, 0))
 pend_approx = Pendulum((0, 0))
 
 pendulum, = ax.plot([], [], 'go-')

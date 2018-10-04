@@ -8,8 +8,8 @@ ax = fig.add_subplot(111, aspect='equal', autoscale_on=False,
                      xlim=(-25, 25), ylim=(-25, 25))
 
 dt = 1.0 / 30
-G = 1.0
-lw = 2
+G = 10
+lw = 1
 
 class Particle:
     def __init__(self, position, velocity, mass, c="b", rad=1):
@@ -106,11 +106,22 @@ class Particle_System:
 
 
 
-part1 = Particle((0, 10), (0, -1), 100, c='g')
-part2 = Particle((-8, 0), (-1, 3), 100, c='b')
-part3 = Particle((8, -3), (-1, 0), 100.0, c='y')
+def particle_circle(num, radius, velocity):
+    angle = 2*np.pi / num
+    particles = []
+    colors = ['r', 'g', 'b', 'y'] * 10
+    for i in range(0, num):
+        theta = angle * i
+        x, y = radius * np.cos(theta), radius * np.sin(theta)
+        theta = theta + np.pi/2
+        xvel, yvel = velocity * np.cos(theta), velocity * np.sin(theta)
 
-particles = Particle_System([part1, part2, part3])
+        particles.append(Particle((x, y), (xvel, yvel), 100, c=colors[i]))
+
+    return particles
+
+
+particles = Particle_System(particle_circle(9, 20, 9))
 
 def init():
     return particles.get_objects()
@@ -126,5 +137,4 @@ anim = animation.FuncAnimation(fig, animate,
                                frames=360, 
                                interval=20,
                                blit=True)
-
 plt.show()
