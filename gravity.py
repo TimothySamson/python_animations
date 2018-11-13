@@ -41,6 +41,10 @@ class Particle:
         x_dv, y_dv = (x_accel*dt, y_accel*dt)
         x_vel_old, y_vel_old = self.velocity
         x_vel, y_vel = (x_vel_old + x_dv, y_vel_old + y_dv)
+        if x_vel > 100:
+            x_vel = 100
+        if y_vel > 100:
+            y_vel = 100
         self.velocity = (x_vel, y_vel)
 
         #update position

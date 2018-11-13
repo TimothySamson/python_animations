@@ -33,8 +33,8 @@ class Pendulum:
         self.ang_vel = self.ang_vel + dt * ang_accel
         self.ang_disp = self.ang_disp + dt * self.ang_vel
 
-    def show(self):
-        print self.ang_disp, self.ang_vel
+    # def show(self):
+        # print self.ang_disp, self.ang_vel
 
     def pos(self):
         x0, y0 = self.center
