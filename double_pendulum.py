@@ -45,7 +45,7 @@ class DoublePendulum:
             [M2*L1*np.cos(dtheta), M2*L2]
             ])
 
-        right =np.array([
+        right = np.array([
                 (-M2*L2*(omega2**2)*np.sin(dtheta) -
                 G*(M1 + M2)*np.sin(theta1)),
                 (M2*L1*(omega1**2)*np.sin(dtheta) -
@@ -69,7 +69,7 @@ class DoublePendulum:
 # TEST #
 ########
 
-pend = DoublePendulum(np.array([120, 0, -90, 0]))
+pend = DoublePendulum(np.array([45, 0, -180, 0]))
 print(pend.state)
 print(pend.position())
 print(pend.dstate(pend.state, 0))
