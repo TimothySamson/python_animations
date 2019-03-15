@@ -6,8 +6,8 @@ EARTH_CENTER = (15.0, 0)
 G = 30.0
 SUN_MASS = 140.0
 SUN_CENTER = (0, 0)
-dt = 1.0 / 120
-INITIAL_VEL = 30
+dt = 1.0 / 30
+INITIAL_VEL = 12
 
 fig = plt.figure()
 ax = fig.add_subplot(111, aspect='equal', autoscale_on=False,
@@ -23,7 +23,7 @@ class Planet:
     def __init__(self):
         global EARTH_CENTER
         self.pos = EARTH_CENTER
-        self.vel = (0, INITIAL_VEL)
+        self.vel = (7, INITIAL_VEL)
 
     def distance(self, x, y):
         return np.sqrt(x**2 + y**2)
@@ -38,8 +38,8 @@ class Planet:
 
         sol_dist = self.distance(x_rel, y_rel)
 
-        accel_x = -G * SUN_MASS * x_rel / (sol_dist**2)
-        accel_y = -G * SUN_MASS * y_rel / (sol_dist**2)
+        accel_x = -G * SUN_MASS * x_rel / (sol_dist**3)
+        accel_y = -G * SUN_MASS * y_rel / (sol_dist**3)
 
         return (accel_x, accel_y)
 
